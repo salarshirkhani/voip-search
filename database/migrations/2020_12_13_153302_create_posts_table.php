@@ -13,16 +13,22 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->id();
-            $table->string('title', 191);
-            $table->text('explain');
-            $table->text('content');
-            $table->string('writer', 191);
-            $table->string('pic', 191);
-            $table->string('file', 191);
+        Schema::create('numbers', function (Blueprint $table) {
+            $table->bigInteger('id')->unsigned()->index();
+            $table->bigInteger('user')->unsigned()->index();
+            $table->bigInteger('number');
+            $table->string('city');
+            $table->boolean('pick');
             $table->timestamps();
-        });
+        });  
+        Schema::table('numbers', function (Blueprint $table) {
+            $table->foreign('user')
+                ->on('users')
+                ->references('id')
+                ->onUpdate('cascade')
+                ->onDelete('cascade')
+                ;
+        });     
     }
 
     /**
