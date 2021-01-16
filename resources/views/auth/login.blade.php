@@ -32,8 +32,8 @@
             <input type="password" name="password" class=" input100" placeholder="کلمه‌عبور" id="id_password">
             <span class="focus-input100"></span>
             <span class="symbol-input100">
-							<i class="fa fa-lock" aria-hidden="true"></i>
-						</span>
+			    <i class="fa fa-lock" aria-hidden="true"></i>
+			</span>
         </div>
 
         <div class="container-login100-form-btn">

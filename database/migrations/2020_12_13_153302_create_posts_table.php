@@ -17,8 +17,9 @@ class CreatePostsTable extends Migration
             $table->bigInteger('id')->unsigned()->index();
             $table->bigInteger('user')->unsigned()->index();
             $table->bigInteger('number');
+            $table->bigInteger('benum');
             $table->string('city');
-            $table->boolean('pick');
+            $table->boolean('pick')->nullable();
             $table->timestamps();
         });  
         Schema::table('numbers', function (Blueprint $table) {

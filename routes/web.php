@@ -25,22 +25,21 @@ Route::prefix('dashboard')
     ->namespace('Dashboard')
     ->group(function() {
         Route::get('', 'IndexController@get')->name('index');
-
-        Route::resource('conversations', 'ConversationController')->only(['index', 'show', 'store']);
-        Route::post('conversations/{conversation}/messages', 'ConversationController@sendMessage')->name('sendMessage');
-
-        Route::resource('plans', 'PlanController')->only(['index']);
-        Route::post('plans/{plan}/subscribe', 'PlanController@subscribe')->name('plans.subscribe');
-        Route::get('plans/callback/{transaction}', 'PlanController@callback')->name('plans.callback');
-
         Route::prefix('admin')
             ->name('admin.')
-            ->middleware('user_type:admin')
+            ->middleware('user_type:owner')
             ->namespace('Admin')
             ->group(function() {
-                Route::get('', 'IndexController@get')->name('index');
-
-                Route::resource('slider-items', 'SliderItemController')->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+                Route::get('', 'IndexController@get')->name('index');          
+                Route::post('voip/create', [
+                    'uses' => 'PostController@CreatePost',
+                    'as' => 'voip.create'
+                ]);
+                
+                Route::get('voip/create', [
+                    'uses' => 'PostController@GetCreatePost',
+                    'as' => 'voip.create'
+                ]);  
             });
 
         Route::prefix('customer')
