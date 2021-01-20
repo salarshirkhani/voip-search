@@ -10,7 +10,7 @@ use Rinvex\Subscriptions\Traits\HasSubscriptions;
 /**
  * App\User
  *
- * @property int $id
+ * @property increments $id
  * @property string $first_name
  * @property string $last_name
  * @property string $type
@@ -21,16 +21,9 @@ use Rinvex\Subscriptions\Traits\HasSubscriptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $mobile
- * @property-read \App\Company|null $company
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Conversation[] $conversations
- * @property-read int|null $conversations_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Enquiry[] $enquiries
  * @property-read int|null $enquiries_count
  * @property-read mixed $name
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Message[] $messages
- * @property-read int|null $messages_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\PlanSubscription[] $subscriptions
  * @property-read int|null $subscriptions_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User newModelQuery()
@@ -59,7 +52,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'type', 'mobile'
+        'first_name', 'last_name', 'email', 'password', 'gender', 'mobile','father_name','id_code','national_code','birthday','location'
     ];
 
     /**
@@ -68,11 +61,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'created_at', 'updated_at', 'email', 'email_verified_at'
-    ];
-
-    protected $appends = [
-        'name'
+        'id','password', 'remember_token', 'created_at', 'updated_at', 'email', 'email_verified_at'
     ];
 
     /**
@@ -84,45 +73,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-        static::created(function(User $model) {
-            if (in_array($model->type, ['customer', 'owner']))
-                $model->newDefaultSubscription(app('rinvex.subscriptions.plan')->where('slug', "{$model->type}-default")->first());
-        });
-    }
 
     public function getNameAttribute() {
         return $this->first_name . ' ' . $this->last_name;
     }
 
-    public function company() {
-        return $this->hasOne('App\Company', 'creator_id');
-    }
 
-    public function conversations() {
-        return $this->belongsToMany('App\Conversation')
-            ->orderBy('created_at', 'desc');
-    }
-
-    public function messages() {
-        return $this->hasMany('App\Message', 'from_id');
-    }
-
-    public function enquiries() {
-        return $this->hasMany('App\Enquiry', 'creator_id');
-    }
-
-    public function defaultSubscription() {
-        return $this->subscription("{$this->type}-{$this->id}");
-    }
-
-    public function newDefaultSubscription($plan) {
-        return $this->newSubscription("{$this->type}-{$this->id}", $plan);
-    }
-
-    public function routeNotificationForSms() {
-        return $this->mobile;
-    }
 }

@@ -27,42 +27,25 @@ Route::prefix('dashboard')
         Route::get('', 'IndexController@get')->name('index');
         Route::prefix('admin')
             ->name('admin.')
-            ->middleware('user_type:owner')
-            ->namespace('Admin')
+            ->namespace('admin')
             ->group(function() {
-                Route::get('', 'IndexController@get')->name('index');          
-                Route::post('voip/create', [
-                    'uses' => 'PostController@CreatePost',
-                    'as' => 'voip.create'
-                ]);
+                Route::get('', 'IndexController@get')->name('index');   
                 
-                Route::get('voip/create', [
-                    'uses' => 'PostController@GetCreatePost',
-                    'as' => 'voip.create'
-                ]);  
+                Route::get('voip/create', 'PostController@GetCreatePost')->name('voip.create');
+                Route::post('voip/create', 'PostController@CreatePost')->name('voip.create');
+
+                Route::get('voip/manage', 'PostController@GetManagePost')->name('voip.manage');
+               
             });
 
         Route::prefix('customer')
             ->name('customer.')
-            ->middleware('user_type:buyer')
             ->namespace('Customer')
             ->group(function() {
                 Route::get('', 'IndexController@get')->name('index');
                 Route::get('search', 'SearchController@search')->name('search');
 
-                Route::resource('enquiries', 'EnquiryController')->only(['create', 'store']);
             });
 
-        Route::prefix('owner')
-            ->name('owner.')
-            ->middleware('user_type:seller')
-            ->namespace('Owner')
-            ->group(function() {
-                Route::get('', 'IndexController@get')->name('index');
 
-                Route::resource('companies', 'CompanyController')->except('index');
-                Route::resource('products', 'ProductController')->except('index');
-                Route::resource('services', 'ServiceController')->except('index');
-                Route::resource('enquiries', 'EnquiryController')->only(['index', 'show']);
-            });
     });

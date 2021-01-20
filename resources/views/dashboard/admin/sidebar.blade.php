@@ -1,4 +1,3 @@
 <x-sidebar-item title="داشبورد" icon="fas fa-tachometer-alt" route="dashboard.admin.index" />
-<x-sidebar-item title="آیتم‌های اسلایدر" icon="fas fa-stream" route="dashboard.admin.slider-items.index" />
-<x-sidebar-item title="افزودن اسلایدر" icon="fas fa-plus" route="dashboard.admin.slider-items.create" />
-<x-sidebar-item title="افزودن خبر" icon="fas fa-plus" route="dashboard.admin.news.create" />
+<x-sidebar-item title="افزودن شماره" icon="fas fa-plus" route="dashboard.admin.voip.create" />
+<x-sidebar-item title="مدیریت شماره ها" icon="fas fa-tasks" route="dashboard.admin.voip.manage" />

@@ -37,6 +37,59 @@
 							<i class="fa fa-user" aria-hidden="true"></i>
 						</span>
         </div>
+        
+        <div class="wrap-input100 validate-input" data-validate="نام پدررا وارد کنید">
+            <input type="text" name="father_name" maxlength="100" class=" input100" placeholder="نام پدر" required=""
+                   id="id_father_name" value="{{ old('father_name') ?? '' }}">
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="کد ملی را وارد کنید">
+            <input type="text" name="national_code" maxlength="100" class=" input100" placeholder="کد ملی" required=""
+                   id="id_national_code" value="{{ old('national_code') ?? '' }}">
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+							<i class="fa fa-code" aria-hidden="true"></i>
+						</span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="شماره شناسنامه  را وارد کنید">
+            <input type="text" name="id_code" maxlength="100" class=" input100" placeholder="شماره شناسنامه" required=""
+                   id="id_id_code" value="{{ old('id_code') ?? '' }}">
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+							<i class="fa fa-id" aria-hidden="true"></i>
+						</span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate=" تاریخ تولد را وارد کنید">
+            <input type="text" name="birthday" maxlength="100" class=" input100" placeholder="تاریخ تولد" required=""
+                   id="id_birthday" value="{{ old('birthday') ?? '' }}">
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+							<i class="fa fa-date" aria-hidden="true"></i>
+						</span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate=" شهر محل اقامت را وارد کنید">
+            <input type="text" name="location" maxlength="100" class=" input100" placeholder="شهر محل اقامت" required=""
+                   id="id_location" value="{{ old('location') ?? '' }}">
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+							<i class="fa fa-city" aria-hidden="true"></i>
+						</span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate=" جنسیت خود را انتخاب کنید">
+            <select class=" input100"  name="gender" id="gender" required="">
+                <option value="male">مرد</option>
+                <option value="female">زن</option>
+                <option value="other">غیره</option>
+            </select>
+        </div>
 
         <div class="wrap-input100 validate-input" data-validate="موبایل صحیح نیست!">
             <input type="tel" name="mobile" class=" input100" placeholder="موبایل" required=""
@@ -52,8 +105,8 @@
                    id="id_email" value="{{ old('email') ?? '' }}">
             <span class="focus-input100"></span>
             <span class="symbol-input100">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
-						</span>
+				<i class="fa fa-envelope" aria-hidden="true"></i>
+			</span>
         </div>
 
         <div class="wrap-input100 validate-input" data-validate="رمزعبور اجباری است!">
@@ -76,12 +129,10 @@
         </div>
 
         <div class="container-login100-form-btn">
-            <button class="login100-form-btn" name="type" value="seller">
-                ثبت‌نام به عنوان فروشنده
+            <button type="submit" class="login100-form-btn" name="type" >
+                ثبت نام
             </button>
-            <button class="login100-form-btn" name="type" value="buyer" style="margin-top: 8px">
-                ثبت‌نام به عنوان خریدار
-            </button>
+
         </div>
 
 {{--        <div class="text-center p-t-12">--}}

@@ -23,11 +23,16 @@ class PostController extends Controller
     {
         $post = new post([
             'number' => $request->input('number'),
-            'city' => $request->input('number'),
+            'city' => $request->input('city'),
             'benum' => $request->input('benum'),
         ]);
-
         $post->save();
-        return redirect()->route('dashboard.admin.voip.create')->with('info', '  شماره جدید ذخیره شد و نام آن' . $request->input('title'));
+        return redirect()->route('dashboard.admin.voip.create')->with('info', ' شماره جدید ذخیره شدن' . $request->input('number'));
+    }
+
+    public function GetManagePost(Request $request)
+    {
+        $posts = post::orderBy('created_at', 'desc')->get();
+        return view('dashboard.admin.voip.manage', ['posts' => $posts]);
     }
 }

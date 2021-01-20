@@ -103,7 +103,7 @@ return [
     | the migrations on disk haven't actually been run in the database.
     |
     */
-
+    'strict' => false,
     'migrations' => 'migrations',
 
     /*
