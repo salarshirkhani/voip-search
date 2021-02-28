@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Dashboard\Admin;
 use App\Http\Controllers\Controller;
 use App\Post;
@@ -25,6 +24,7 @@ class PostController extends Controller
             'number' => $request->input('number'),
             'city' => $request->input('city'),
             'benum' => $request->input('benum'),
+            'price' => $request->input('price'),
         ]);
         $post->save();
         return redirect()->route('dashboard.admin.voip.create')->with('info', ' شماره جدید ذخیره شدن' . $request->input('number'));
@@ -34,5 +34,30 @@ class PostController extends Controller
     {
         $posts = post::orderBy('created_at', 'desc')->get();
         return view('dashboard.admin.voip.manage', ['posts' => $posts]);
+    }
+
+    public function DeletePost($id){
+        $post = post::find($id);
+        $post->delete();
+        return redirect()->route('dashboard.admin.voip.manage')->with('info', 'شماره پاک شد');
+    }
+
+    public function GetEditPost($id)
+    { 
+        $post = post::find($id);
+        return view('dashboard.admin.voip.updatepost', ['post' => $post, 'id' => $id]);
+    }
+
+    public function UpdatePost(Request $request)
+    {
+        $post = post::find($request->input('id'));
+        if (!is_null($post)) {
+            $post->number = $request->input('number');
+            $post->city = $request->input('city');
+            $post->benum = $request->input('benum');
+            $post->price = $request->input('price');
+            $post->save();
+        }
+        return redirect()->route('dashboard.admin.voip.updatepost',$post->id)->with('info', 'شماره ویرایش شد');
     }
 }

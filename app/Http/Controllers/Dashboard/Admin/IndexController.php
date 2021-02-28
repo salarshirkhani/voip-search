@@ -9,4 +9,5 @@ class IndexController extends Controller
     public function get() {
         return view('dashboard.admin.index');
     }
+
 }

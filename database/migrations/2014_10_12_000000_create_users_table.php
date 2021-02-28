@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->enum('gender', ['male', 'female', 'other']);
+            $table->enum('type', ['customer', 'admin', 'operator']);
             $table->string('father_name');
             $table->bigInteger('id_code');
             $table->bigInteger('national_code');

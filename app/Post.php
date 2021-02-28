@@ -10,6 +10,7 @@ class Post extends Model
         'number',
         'benum',
         'city',
+        'price',
         'pick',
         'user',
     ];

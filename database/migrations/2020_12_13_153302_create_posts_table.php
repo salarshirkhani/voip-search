@@ -18,6 +18,7 @@ class CreatePostsTable extends Migration
             $table->bigInteger('user')->unsigned()->index();
             $table->bigInteger('number')->unsigned()->index();
             $table->bigInteger('benum');
+            $table->bigInteger('price');
             $table->string('city');
             $table->boolean('pick')->nullable();
             $table->timestamps();

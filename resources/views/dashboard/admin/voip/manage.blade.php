@@ -21,12 +21,12 @@
                 <x-card-body>
                     <div class="box-body">
                         <table id="example2" class="table table-bordered table-hover">
-
                             <thead>
                             <tr>
                                 <th>پیش شماره</th>
                                 <th>شماره تلفن</th>
                                 <th>شهر</th>
+                                <th>حذف</th>                               
                                 <th>ویرایش</th>
                             </tr>
                             </thead>
@@ -36,7 +36,12 @@
                                     <td>{{ $item->benum }}</td>
                                     <td>{{ $item->number }}</td>
                                     <td>{{ $item->city }}</td>
-                                    <td></td>
+                                    <td>
+                                    <a href="{{route('dashboard.admin.voip.deletepost',['id'=>$item->id])}}" class="delete_post" ><i class="fa fa-fw fa-eraser"></i></a>                 
+                                    </td>
+                                    <td>
+                                    <a href="{{route('dashboard.admin.voip.updatepost',['id'=>$item->id])}}" class="edit_post" target="_blank"><i class="fas fa-edit"></i></a>
+                                    </td>
                                 </tr>
                              @endforeach
                                 </tbody>
@@ -45,6 +50,7 @@
                                     <th>پیش شماره</th>
                                     <th>شماره تلفن</th>
                                     <th>شهر</th>
+                                    <th>حذف</th>                                   
                                     <th>ویرایش</th>
                                 </tr>
                                 </tfoot>
