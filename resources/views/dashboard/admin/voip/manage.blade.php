@@ -25,6 +25,7 @@
                             <tr>
                                 <th>پیش شماره</th>
                                 <th>شماره تلفن</th>
+                                <th>قیمت</th>
                                 <th>شهر</th>
                                 <th>حذف</th>                               
                                 <th>ویرایش</th>
@@ -35,6 +36,7 @@
                                 <tr>
                                     <td>{{ $item->benum }}</td>
                                     <td>{{ $item->number }}</td>
+                                    <td>{{ $item->price }}</td>
                                     <td>{{ $item->city }}</td>
                                     <td>
                                     <a href="{{route('dashboard.admin.voip.deletepost',['id'=>$item->id])}}" class="delete_post" ><i class="fa fa-fw fa-eraser"></i></a>                 
@@ -49,6 +51,7 @@
                                 <tr>
                                     <th>پیش شماره</th>
                                     <th>شماره تلفن</th>
+                                    <th>قیمت</th>
                                     <th>شهر</th>
                                     <th>حذف</th>                                   
                                     <th>ویرایش</th>
@@ -58,7 +61,7 @@
                     </div>
                     </x-card-body>
                 <x-card-footer>
-                    <button type="submit" class="btn btn-success">ثبت شماره جدید</button>
+                    <a href="{{route('dashboard.admin.voip.create')}}" class="btn btn-success">ثبت شماره جدید</a>
                 </x-card-footer>      
         </x-card>
     </div>
