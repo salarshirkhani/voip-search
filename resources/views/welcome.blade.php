@@ -38,7 +38,7 @@
               </div>
               <div class="row">
                 <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    <input class=" animated animatedFadeInUp fadeInUp"  style="animation-delay: 600ms;" type="number" placeholder="شماره تماس شما">
+                    <input class=" animated animatedFadeInUp fadeInUp"  style="animation-delay: 600ms;" type="number" required placeholder="شماره تماس شما">
                 </div> 
                 <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                   @csrf
