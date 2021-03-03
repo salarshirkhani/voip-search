@@ -44,7 +44,13 @@ class FrontController extends Controller
         $number=$request->input('number');
         $benum=$request->input('benum');
         $city=$request->input('city');
-        return view('cart')->with(['number' => $number ,'benum' => $benum ,'city' => $city]);
+        $numid=$request->input('id');
+        return view('cart')->with([
+            'number' => $number ,
+            'benum' => $benum ,
+            'numid' => $numid ,
+            'city' => $city
+            ]);
     }
     public function payment() {
         
@@ -57,7 +63,11 @@ class FrontController extends Controller
             'last_name' => $data['last_name'],
             'father_name' => $data['father_name'],
             'id_code' => $data['id_code'],
+            'internet_service' => $data['internet_service'],
             'national_code' => $data['national_code'],
+            'address' => $data['address'],
+            'nationality' => $data['nationality'],
+            'postal_code' => $data['postal_code'],
             'birthday' => $data['birthday'],
             'location' => $data['location'],
             'gender' => $data['gender'],
@@ -65,6 +75,12 @@ class FrontController extends Controller
             'mobile' => $data['mobile'],
             'password' => Hash::make($data['password']),
         ]);
+        
+        $post = post::find($data['numid']);
+        if (!is_null($post)) {
+            $post->user = $data['email'];
+            $post->save();
+        }
         $user->save();
 
         return redirect()->route('pay')->with('info', ' شماره جدید ذخیره شدن' );    

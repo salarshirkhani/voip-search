@@ -66,9 +66,10 @@
                 <div class="enroll" style="margin: 15px 15px;">
                 <form action="{{ route('cart') }}" method="GET" id="form_search">
                     <input type="hidden" name="number" value="{{ $numbers->number }}">
+                    <input type="hidden" name="id" value="{{ $numbers->id }}">
                     <input type="hidden" name="benum" value="{{ $numbers->benum }}">
                     <input type="hidden" name="city" value="{{ $numbers->city }}">
-                    <input class="sabt animated animatedFadeInUp fadeInUp"  style="animation-delay: 800ms;" type="submit" value="پرداخت">
+                    <input class="sabt animated animatedFadeInUp fadeInUp"  style="animation-delay: 800ms;" type="submit" value="انتخاب">
                 </form>
                 </div>
               </li>

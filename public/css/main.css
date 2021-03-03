@@ -11,11 +11,11 @@
    Base styles: opinionated defaults
    ========================================================================== */
 
-   @font-face {
+@font-face {
     font-family: iransans;
     src: url('../fonts/IRANSansWeb.woff2');
 }
-   html {
+ html {
   color: #222;
   font-size: 1em;
   line-height: 1.4;
@@ -724,6 +724,15 @@ a {
 }
 /*CART PAGE FORM*/
 .userdet input{
+  border-radius: 12px;
+  width: 100%;
+  margin-bottom: 10px;
+  line-height: 25px;
+  box-shadow: 0px 0px 7px #00000052;
+  border: none;
+  padding: 12px;
+}
+.userdet select{
   border-radius: 12px;
   width: 100%;
   margin-bottom: 10px;
