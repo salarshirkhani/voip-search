@@ -23,6 +23,12 @@ class UserController extends Controller
     public function DeleteUser($id){
         $post = user::find($id);
         $post->delete();
-        return redirect()->route('dashboard.admin.voip.manage')->with('info', 'کاربر پاک شد');
+        return redirect()->route('dashboard.admin.users.index')->with('info', 'کاربر فوت شد');
     }
+
+    public function SingleUsers($id){
+        $post = user::find($id);
+        return view('dashboard.admin.users.single', ['post' => $post, 'id' => $id]);
+    }
+
 }
