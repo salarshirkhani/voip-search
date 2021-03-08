@@ -27,6 +27,7 @@
                                 <th>کد ملی</th>
                                 <th>ایمیل</th>
                                 <th>شهر</th>
+                                <th>ویرایش</th>
                                 <th>حذف</th>
                             </tr>
                             </thead>
@@ -37,6 +38,9 @@
                                     <td>{{ $item->national_code }}</td>
                                     <td>{{ $item->email }}</td>
                                     <td>{{ $item->location }}</td>
+                                    <td>
+                                    <a href="{{route('dashboard.admin.users.single',['id'=>$item->id])}}" class="delete_post" ><i class="fa fa-fw fa-edit"></i></a>                                    
+                                    </td>
                                     <td>
                                     <a href="{{route('dashboard.admin.users.deleteuser',['id'=>$item->id])}}" class="delete_post" ><i class="fa fa-fw fa-eraser"></i></a> 
                                     </td>
@@ -49,6 +53,7 @@
                                     <th>کد ملی</th>
                                     <th>ایمیل</th>
                                     <th>شهر</th>
+                                    <th>ویرایش</th>
                                     <th>حذف</th>
                                 </tr>
                                 </tfoot>

@@ -43,7 +43,8 @@ Route::prefix('dashboard')
                 //Users
                 Route::get('users/index', 'UserController@GetUsers')->name('users.index'); 
                 Route::get('deleteuser/{id}','UserController@DeleteUser')->name('users.deleteuser');  
-                Route::get('deleteuser/{id}','UserController@SingleUsers')->name('users.signle');  
+                Route::get('users/single/{id}','UserController@SingleUsers')->name('users.single');  
+                Route::post('users/single/{id}','UserController@UpdateUsers')->name('users.single');  
 
             });
 
