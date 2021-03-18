@@ -128,6 +128,7 @@
               <?php echo $numid;?>
               <input type="hidden" name="numberh" value="{{$number}}">
               <input type="hidden" name="benumh" value="{{ $benum }}">
+              <input type="hidden" name="price" value="{{ $price }}">
               <input type="hidden" name="cityh" value="{{ $city }}">
               <input type="submit" value="پرداخت">
             </div>

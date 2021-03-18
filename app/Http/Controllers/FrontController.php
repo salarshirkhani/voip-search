@@ -9,6 +9,11 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Post;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
+
 class FrontController extends Controller
 {
 
@@ -31,12 +36,12 @@ class FrontController extends Controller
     {
         $data = $request->validated();
         $numbers = post::orderBy('created_at', 'desc'); 
-        if (!empty($data['city']))
-            $numbers = $numbers->where('city', $data['city']);
-        if (!empty($data['benum']))
-            $numbers = $numbers->where('benum', $data['benum']);
-        if (!empty($data['number']))
-            $numbers = $numbers->where('number', 'LIKE', '%'. $this->escape_like($data['number']) . '%');
+        if (!empty($data['benum'])){
+            $numbers = $numbers->where('benum', $data['benum']);}
+        if (!empty($data['city'])){
+            $numbers = $numbers->where('city', $data['city']);}
+        if (!empty($data['number'])){
+            $numbers = $numbers->where('number', 'LIKE', '%'. $this->escape_like($data['number']) . '%');}
         return view('show')->with(['numbers' => $numbers->paginate(12)]);
     }
 
@@ -49,6 +54,7 @@ class FrontController extends Controller
             'number' => $number ,
             'benum' => $benum ,
             'numid' => $numid ,
+            'price' => $request->input('price') ,
             'city' => $city
             ]);
     }
@@ -83,7 +89,29 @@ class FrontController extends Controller
         }
         $user->save();
 
-        return redirect()->route('pay')->with('info', ' شماره جدید ذخیره شدن' );    
+        $MerchantID = "XXXX-XXXX-XXXX-XXXXXXXXXXXXXXXXXXXXX";
+        $Amount = $data['price'];
+        $InvoiceID = $data['numid'];
+        $Description = "Pay number";
+        $Email = $data['email'];
+        $Mobile = $data['mobile'];
+        $CallbackURL = "localhost/pay";
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, 'https://hamrahtog.ir/webservice/rest/PaymentRequest');
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type' => 'application/json'));
+        curl_setopt($curl, CURLOPT_POSTFIELDS, 
+        "MerchantID={$MerchantID}&Amount={$Amount}&InvoiceID={$InvoiceID}&Description={$Description}&Email={$Email}&Mobile={$Mobile}&CallbackURL=". urlencode($CallbackURL));
+        curl_setopt($curl, CURLOPT_TIMEOUT, 30);curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $curl_exec = curl_exec($curl);
+        curl_close($curl);$result = json_decode($curl_exec);
+        if (isset($result->Status) && $result->Status == 100){
+            header("Location: {$result->PaymentUrl}");
+        } 
+        else {
+            echo (isset($result->Status) && $result->Status != "") ? $result->Status : "Error connecting to web service";
+        }
+        return redirect()->route('pay');    
     }
 
 }
