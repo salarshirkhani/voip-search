@@ -1,68 +1,78 @@
 <?php
 
 namespace App;
-
 use Illuminate\Database\Eloquent\Model;
-use Shetabit\Payment\Exceptions\InvalidPaymentException;
 
-/**
- * App\Transaction
- *
- * @property int $id
- * @property int|null $user_id
- * @property int|null $plan_id
- * @property int $amount
- * @property string|null $transaction_id
- * @property string|null $reference_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $paid_at
- * @property-read \Rinvex\Subscriptions\Models\Plan|null $plan
- * @property-read \App\User|null $user
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Transaction newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Transaction newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Transaction query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Transaction whereAmount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Transaction whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Transaction whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Transaction wherePaidAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Transaction wherePlanId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Transaction whereReferenceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Transaction whereTransactionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Transaction whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Transaction whereUserId($value)
- * @mixin \Eloquent
- */
 class Transaction extends Model
 {
-    protected $dates = [
-        'paid_at'
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'transactions';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'type',
+        'amount',
+        'payment_info',
+        'details',
+        'status',
+        'verified',
+        'paid_at',
+        'verified_at',
     ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
     protected $casts = [
-        'amount' => 'int',
+        'payment_info' => 'json',
+        'details' => 'json',
     ];
 
-    public function user() {
-        return $this->belongsTo('App\User');
-    }
+    /**
+     * Status enums
+     *
+     * @var array
+     */
+    public static $status = [
+        'not_paid' => 0,
+        'paid' => 1,
+    ];
 
-    public function plan() {
-        return $this->belongsTo(\Rinvex\Subscriptions\Models\Plan::class);
-    }
+    /**
+     * Status enums
+     *
+     * @var array
+     */
+    public static $type = [
+        'form' => 1,
+        'factor' => 2,
+    ];
 
-    public function verify(User $user = null) {
-        if ($user != null)
-            \app(\Illuminate\Contracts\Auth\Access\Gate::class)->authorize('verify', $this);
-
-        try {
-            $receipt = \Payment::amount($this->amount)->transactionId($this->id)->verify();
-        } catch (InvalidPaymentException $exception) {
-            return $exception->getMessage();
+    public function form()
+    {
+        if ($this->type == self::$type['form']) {
+            return Form::find($this->details['form_id']);
         }
-        $this->paid_at = now();
-        $this->reference_id = $receipt->getReferenceId();
-        $this->save();
-        return true;
+
+        return null;
+    }
+
+    public function factor()
+    {
+        if ($this->type == self::$type['factor']) {
+            return Factor::find($this->details['factor_id']);
+        }
+
+        return null;
     }
 }
